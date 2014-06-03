@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="NCT_SYSTEM_ROLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="16" Scale="0" Nullable="false" StoreGeneratedPattern="None" />
+          <Property Name="CODE" Type="varchar2" MaxLength="32" Nullable="false" />
+          <Property Name="SRL_NAME" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="varchar2" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="NCT_USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="16" Scale="0" Nullable="false" />
+          <Property Name="USER_NAME" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="PASS" Type="varchar2" MaxLength="32" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar2" MaxLength="50" />
+          <Property Name="IS_ACTIVE" Type="number" Precision="1" Scale="0" Nullable="false" />
+          <Property Name="LOGIN" Type="varchar2" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NCT_USER_ROLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="16" Scale="0" Nullable="false" />
+          <Property Name="SRL_ID" Type="number" Precision="16" Scale="0" Nullable="false" />
+          <Property Name="USER_ID" Type="number" Precision="16" Scale="0" Nullable="false" />
+        </EntityType>
+        <Association Name="NCT_URL_SRL_FK">
+          <End Role="NCT_SYSTEM_ROLE" Type="Self.NCT_SYSTEM_ROLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NCT_USER_ROLE" Type="Self.NCT_USER_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NCT_SYSTEM_ROLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NCT_USER_ROLE">
+              <PropertyRef Name="SRL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="NCT_URL_USR_FK">
+          <End Role="NCT_USER" Type="Self.NCT_USER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NCT_USER_ROLE" Type="Self.NCT_USER_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NCT_USER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NCT_USER_ROLE">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="NCT_SYSTEM_ROLE" EntityType="Self.NCT_SYSTEM_ROLE" Schema="GCSS" store:Type="Tables" />
+          <EntitySet Name="NCT_USER" EntityType="Self.NCT_USER" Schema="GCSS" store:Type="Tables" />
+          <EntitySet Name="NCT_USER_ROLE" EntityType="Self.NCT_USER_ROLE" Schema="GCSS" store:Type="Tables" />
+          <AssociationSet Name="NCT_URL_SRL_FK" Association="Self.NCT_URL_SRL_FK">
+            <End Role="NCT_SYSTEM_ROLE" EntitySet="NCT_SYSTEM_ROLE" />
+            <End Role="NCT_USER_ROLE" EntitySet="NCT_USER_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="NCT_URL_USR_FK" Association="Self.NCT_URL_USR_FK">
+            <End Role="NCT_USER" EntitySet="NCT_USER" />
+            <End Role="NCT_USER_ROLE" EntitySet="NCT_USER_ROLE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="NCT_SYSTEM_ROLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="CODE" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SRL_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NCT_USER_ROLE" Relationship="Self.NCT_URL_SRL_FK" FromRole="NCT_SYSTEM_ROLE" ToRole="NCT_USER_ROLE" />
+        </EntityType>
+        <EntityType Name="NCT_USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PASS" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IS_ACTIVE" Type="Int16" Nullable="false" />
+          <Property Name="LOGIN" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="NCT_USER_ROLE" Relationship="Self.NCT_URL_USR_FK" FromRole="NCT_USER" ToRole="NCT_USER_ROLE" />
+        </EntityType>
+        <EntityType Name="NCT_USER_ROLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="SRL_ID" Type="Int64" Nullable="false" />
+          <Property Name="USER_ID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="NCT_SYSTEM_ROLE" Relationship="Self.NCT_URL_SRL_FK" FromRole="NCT_USER_ROLE" ToRole="NCT_SYSTEM_ROLE" />
+          <NavigationProperty Name="NCT_USER" Relationship="Self.NCT_URL_USR_FK" FromRole="NCT_USER_ROLE" ToRole="NCT_USER" />
+        </EntityType>
+        <Association Name="NCT_URL_SRL_FK">
+          <End Role="NCT_SYSTEM_ROLE" Type="Self.NCT_SYSTEM_ROLE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NCT_USER_ROLE" Type="Self.NCT_USER_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NCT_SYSTEM_ROLE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NCT_USER_ROLE">
+              <PropertyRef Name="SRL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="NCT_URL_USR_FK">
+          <End Role="NCT_USER" Type="Self.NCT_USER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NCT_USER_ROLE" Type="Self.NCT_USER_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NCT_USER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NCT_USER_ROLE">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="NCT_SYSTEM_ROLE" EntityType="Self.NCT_SYSTEM_ROLE" />
+          <EntitySet Name="NCT_USER" EntityType="Self.NCT_USER" />
+          <EntitySet Name="NCT_USER_ROLE" EntityType="Self.NCT_USER_ROLE" />
+          <AssociationSet Name="NCT_URL_SRL_FK" Association="Self.NCT_URL_SRL_FK">
+            <End Role="NCT_SYSTEM_ROLE" EntitySet="NCT_SYSTEM_ROLE" />
+            <End Role="NCT_USER_ROLE" EntitySet="NCT_USER_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="NCT_URL_USR_FK" Association="Self.NCT_URL_USR_FK">
+            <End Role="NCT_USER" EntitySet="NCT_USER" />
+            <End Role="NCT_USER_ROLE" EntitySet="NCT_USER_ROLE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="NCT_SYSTEM_ROLE">
+            <EntityTypeMapping TypeName="Model.NCT_SYSTEM_ROLE">
+              <MappingFragment StoreEntitySet="NCT_SYSTEM_ROLE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="SRL_NAME" ColumnName="SRL_NAME" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NCT_USER">
+            <EntityTypeMapping TypeName="Model.NCT_USER">
+              <MappingFragment StoreEntitySet="NCT_USER">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="PASS" ColumnName="PASS" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="IS_ACTIVE" ColumnName="IS_ACTIVE" />
+                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NCT_USER_ROLE">
+            <EntityTypeMapping TypeName="Model.NCT_USER_ROLE">
+              <MappingFragment StoreEntitySet="NCT_USER_ROLE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SRL_ID" ColumnName="SRL_ID" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

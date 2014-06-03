@@ -1,0 +1,28 @@
+﻿@Html.DevExpress().ComboBox(
+		settings =>
+		{
+			settings.Name = Model.ClientName;
+			settings.Width = 230;
+			settings.Properties.DropDownWidth = 350;
+			settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+			settings.CallbackRouteValues = Model.CallbackRouteValues;
+			settings.Properties.CallbackPageSize = 15;
+			settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+			settings.Properties.TextField = Model.FieldName;
+			settings.Properties.ValueField = Model.FieldName;
+			settings.Properties.ValueType = typeof(string);
+			settings.Properties.FilterMinLength = 1;
+			
+			settings.PreRender = (sender, e) =>
+			{
+				var cmb = sender as MVCxComboBox;
+				cmb.Value = Model.FilterValue;
+			};
+			settings.Properties.EnableClientSideAPI = true;
+			settings.Attributes["data-grid-view-name"] = Model.GridName;
+			settings.Attributes["data-field-name"] = Model.FieldName;
+			settings.Attributes["data-client-name"] = Model.ClientName;			
+			settings.Properties.ClientSideEvents.KeyDown = "FilterCB_KeyDown";
+			settings.Properties.ClientSideEvents.BeginCallback = "FilterCB_BeginCallback";
+		}
+).BindList(Model.GetRange, Model.GetId).GetHtml()

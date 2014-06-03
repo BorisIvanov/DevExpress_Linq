@@ -1,0 +1,72 @@
+﻿	.edit_form .line {
+		display: block;
+		float: left;
+		clear: both;
+		width: 620px;
+		margin: 1px 0px;
+	}
+
+	.edit_form .label,
+	.edit_form .wideLabel {
+		display: block;
+		float: left;
+		width: 120px;
+		clear: left;
+		padding: 4px 0px;
+		/* override bootstrap */
+		color: #000000;
+		text-align: left;
+	}
+	.edit_form .wideLabel {
+		width: 200px;
+	}
+
+	.edit_form .editor {
+		float: left;
+		margin-right: 8px;
+		width: 180px;
+	}
+
+	.edit_form .checkEditor {
+		float: left;
+		margin-right: 8px;
+	}
+
+	.edit_form .button {
+		margin: 8px 4px 0px 0px;
+		float: left;
+	}
+
+	.edit_form .validator {
+		display: block;
+		float: left;
+		clear: right;
+		padding: 3px 0px;
+		color: red;
+		font-family: Verdana;
+		font-size: 8pt;
+	}
+
+	.edit_form#validationForm .label {
+		width: 80px;
+	}
+
+	.edit_form#popupControlForm .label {
+		width: 70px;
+	}
+
+	.edit_form#popupControlForm .button {
+		margin: 8px 4px 84px 0px;
+	}
+
+	.edit_form#popupForm .label {
+		width: 70px;
+	}
+
+	.edit_form#jQueryValidationForm .line {
+		width: 310px;
+	}
+
+	.edit_form#popupForm .line {
+		width: 260px;
+	}

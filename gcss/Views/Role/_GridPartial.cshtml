@@ -1,0 +1,47 @@
+@model gcss.Models.Response.RoleList
+@{
+	var grid = Html.DevExpress().GridView(settings =>
+	{
+		settings.Name = Model.GridName;
+		settings.CallbackRouteValues = Model.Action.Grid;
+
+		settings.CommandColumn.Visible = true;
+		settings.CommandColumn.ShowNewButton = true;
+		settings.SettingsEditing.AddNewRowRouteValues = Model.Action.Add;
+		settings.CommandColumn.ShowEditButton = true;
+		settings.SettingsEditing.UpdateRowRouteValues = Model.Action.Upd;
+		settings.CommandColumn.ShowDeleteButton = true;
+		settings.SettingsEditing.DeleteRowRouteValues = Model.Action.Del;
+
+		settings.CustomBindingRouteValuesCollection.Add(GridViewOperationType.Sorting, Model.Action.Sort);
+		settings.CustomBindingRouteValuesCollection.Add(GridViewOperationType.Paging, Model.Action.Paging);
+		settings.CustomBindingRouteValuesCollection.Add(GridViewOperationType.Filtering, Model.Action.Filter);
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+    settings.SettingsBehavior.ConfirmDelete = true;
+
+		settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+		/* FILTER */
+		settings.Settings.ShowFilterRow = true;
+		
+		/* FIELDS */
+		settings.KeyFieldName = Model.GridViewModel.KeyFieldName;
+		foreach (var columnState in Model.GridViewModel.Columns)
+		{
+			var column = new MVCxGridViewColumn {FieldName = columnState.FieldName};
+			if (Model.ComboFilterList.ContainsKey(columnState.FieldName))
+			{
+				var filter = Model.ComboFilterList[columnState.FieldName];
+				column.SetFilterTemplateContent(c => Html.RenderPartial("../Helpers/FilterComboBoxPartial", filter));
+			}
+			settings.Columns.Add(column);
+		}
+		
+	});
+	
+	if (ViewData["EditError"] != null){
+		grid.SetEditErrorText((string)ViewData["EditError"]);
+  }
+}
+@grid.BindToCustomData(Model.GridViewModel).GetHtml()

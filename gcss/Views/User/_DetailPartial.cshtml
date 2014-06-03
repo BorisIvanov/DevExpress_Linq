@@ -1,0 +1,118 @@
+﻿<div class="edit_form">
+	<div class="line">
+
+		@Html.DevExpress().Label(
+			edtSettings =>
+			{
+				edtSettings.Text = Resources.User.Login;
+				edtSettings.ControlStyle.CssClass = "label";
+				edtSettings.AssociatedControlName = "LOGIN";
+			}).GetHtml()
+
+		@Html.DevExpress().TextBox(
+			edtSettings =>
+			{
+				edtSettings.Name = "LOGIN";
+				edtSettings.ControlStyle.CssClass = "editor";
+				edtSettings.ShowModelErrors = true;
+			}).Bind(DataBinder.Eval(Model, "LOGIN")).GetHtml()
+
+	</div>
+	<div class="line">
+
+		@Html.DevExpress().Label(
+			edtSettings =>
+			{
+				edtSettings.Text = "User name:";
+				edtSettings.ControlStyle.CssClass = "label";
+				edtSettings.AssociatedControlName = "USER_NAME";
+			}).GetHtml()
+
+		@Html.DevExpress().TextBox(
+			edtSettings =>
+			{
+				edtSettings.Name = "USER_NAME";
+				edtSettings.ControlStyle.CssClass = "editor";
+				edtSettings.ShowModelErrors = true;
+			}).Bind(DataBinder.Eval(Model, "USER_NAME")).GetHtml()
+
+	</div>
+	<div class="line">
+
+		@Html.DevExpress().Label(
+			edtSettings =>
+			{
+				edtSettings.Text = "email:";
+				edtSettings.ControlStyle.CssClass = "label";
+				edtSettings.AssociatedControlName = "EMAIL";
+			}).GetHtml()
+
+		@Html.DevExpress().TextBox(
+			edtSettings =>
+			{
+				edtSettings.Name = "EMAIL";
+				edtSettings.ControlStyle.CssClass = "editor";
+				edtSettings.ShowModelErrors = true;
+			}).Bind(DataBinder.Eval(Model, "EMAIL")).GetHtml()
+
+	</div>
+	
+	<div class="line">
+		@Html.DevExpress().Label(
+			edtSettings =>
+			{
+				edtSettings.Text = "password:";
+				edtSettings.ControlStyle.CssClass = "label";
+				edtSettings.AssociatedControlName = "PASS";
+			}).GetHtml()
+		
+		@Html.DevExpress().TextBox(
+			edtSettings =>
+			{
+				edtSettings.Name = "PASS";
+				edtSettings.ControlStyle.CssClass = "editor";
+				edtSettings.ShowModelErrors = true;
+				edtSettings.Properties.Password = true;
+			}).Bind(DataBinder.Eval(Model, "PASS")).GetHtml()
+	</div>
+		
+	<div class="line">
+		@Html.DevExpress().Label(
+			edtSettings => {
+				edtSettings.ControlStyle.CssClass = "label";
+			}).GetHtml()
+		@Html.DevExpress().CheckBox(
+			edtSettings => {
+				edtSettings.Name = "Is IS_ACTIVE";
+				edtSettings.ControlStyle.CssClass = "checkEditor";
+				edtSettings.Text = "Is active";
+				edtSettings.ShowModelErrors = true;
+				edtSettings.Properties.ValueType = typeof(Int16);
+				edtSettings.Properties.ValueChecked = 1;
+				edtSettings.Properties.ValueUnchecked = 0;
+			}).Bind(DataBinder.Eval(Model, "IS_ACTIVE")).GetHtml()
+	</div>
+
+	<div class="line">
+		@Html.DevExpress().Label(
+			edtSettings => { edtSettings.ControlStyle.CssClass = "label"; }
+		).GetHtml()
+
+		@Html.DevExpress().Button(
+			btnSettings => {
+				btnSettings.Name = "btnUpdate";
+				btnSettings.ControlStyle.CssClass = "button";
+				btnSettings.Text = "Update";
+				btnSettings.ClientSideEvents.Click = "function(s, e){ UserGridView.UpdateEdit(); }";
+		}).GetHtml()
+		
+		@Html.DevExpress().Button(
+			btnSettings => {
+				btnSettings.Name = "btnCancel";
+				btnSettings.ControlStyle.CssClass = "button";
+				btnSettings.Text = "Cancel";
+				btnSettings.ClientSideEvents.Click = "function(s, e){ UserGridView.CancelEdit(); }";
+			}
+		).GetHtml()
+	</div>
+</div>
